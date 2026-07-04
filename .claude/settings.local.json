@@ -12,7 +12,8 @@
       "Bash(cd \"/Users/dork/.claude/projects/-Users-dork-Desktop-PaAnRes/memory\")",
       "Bash(cat MEMORY.md)",
       "Bash(git -c user.name=geeznerd -c user.email=unpaidcomics@outlook.com commit -q -m 'Add punchy-pink mobile layout + playful scroll animations *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(git -c user.name=geeznerd -c user.email=unpaidcomics@outlook.com commit -q -m 'Add Facebook link to footers \\(icon + text link\\) *)"
     ]
   }
 }
