@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Passion Animal Rescue — Stray Today. Family Tomorrow.</title>
 <meta name="description" content="Volunteer-run animal rescue in Long Beach, CA. Adopt, foster, volunteer, or donate to help the cats, dogs & small critters of Long Beach find loving homes.">
+<meta name="theme-color" content="#E9898D">
 <link rel="icon" href="assets/logo-mark.png">
 <meta property="og:title" content="Passion Animal Rescue">
 <meta property="og:description" content="Stray today. Family tomorrow. Volunteer-run rescue in Long Beach, CA.">
@@ -20,6 +21,15 @@
   a{color:inherit}
   img{max-width:100%}
   @keyframes par-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---- layout switch: mobile design < 768px, desktop design >= 768px ---- */
+  .only-mobile{display:none}
+  @media(max-width:767px){
+    .only-desktop{display:none!important}
+    .only-mobile{display:block!important}
+  }
+
+  /* ---- desktop helpers ---- */
   .wrap{padding-left:5vw;padding-right:5vw}
   .nav-links{display:flex;align-items:center;gap:26px;font-size:14px;font-weight:600}
   .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
@@ -27,24 +37,54 @@
   .donate-card{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
   .footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:44px}
   .amt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-  /* Tablet */
-  @media(max-width:860px){
+  @media(min-width:768px) and (max-width:960px){
     .grid-3{grid-template-columns:1fr 1fr}
     .grid-2,.donate-card{grid-template-columns:1fr;gap:32px}
     .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
   }
-  /* Phone */
-  @media(max-width:560px){
-    .nav-links{display:none}
-    .grid-3{grid-template-columns:1fr}
-    .footer-grid{grid-template-columns:1fr}
-    .hero-art{display:none}
+
+  /* ---- playful reveal-on-scroll ---- */
+  .reveal{opacity:0;transform:translateY(28px) scale(.96);
+    transition:opacity .5s ease, transform .6s cubic-bezier(.34,1.56,.64,1)}
+  .reveal.in{opacity:1;transform:none}
+  .stagger > .reveal:nth-child(2){transition-delay:.07s}
+  .stagger > .reveal:nth-child(3){transition-delay:.14s}
+  .stagger > .reveal:nth-child(4){transition-delay:.21s}
+  .stagger > .reveal:nth-child(5){transition-delay:.28s}
+  .stagger > .reveal:nth-child(6){transition-delay:.35s}
+
+  /* ---- tap / hover lift ---- */
+  .lift{transition:transform .16s ease, box-shadow .16s ease}
+  .lift:hover{transform:translateY(-3px)}
+  .lift:active{transform:translateY(1px) scale(.99)}
+
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1!important;transform:none!important;transition:none!important}
+    .marquee-track{animation:none!important}
+    .lift{transition:none!important}
+    html{scroll-behavior:auto}
   }
+
+  /* ---- mobile slide-in menu ---- */
+  #m-backdrop{position:fixed;inset:0;background:rgba(57,49,47,.5);opacity:0;visibility:hidden;transition:opacity .28s;z-index:99}
+  #m-backdrop.open{opacity:1;visibility:visible}
+  #m-menu{position:fixed;top:0;right:0;height:100%;width:76%;max-width:300px;background:#393130;color:#fff;
+    transform:translateX(105%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:100;padding:76px 28px;
+    display:flex;flex-direction:column;gap:2px;box-shadow:-10px 0 40px rgba(0,0,0,.3)}
+  #m-menu.open{transform:none}
+  #m-menu a{color:#fff;text-decoration:none;font-weight:800;font-size:19px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+  #m-menu a:last-child{border-bottom:none}
+  #m-close{position:absolute;top:20px;right:22px;font-size:30px;color:#fff;background:none;border:none;cursor:pointer;line-height:1}
+  .noscroll{overflow:hidden}
 </style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 
-<div style="background:#E9898D">
+<!-- ============================================================ -->
+<!-- ===================== DESKTOP LAYOUT ======================== -->
+<!-- ============================================================ -->
+<div class="only-desktop" style="background:#E9898D">
 
   <!-- NAV -->
   <div class="wrap" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px;background:#E9898D;border-bottom:2px solid #393130">
@@ -57,26 +97,26 @@
       <a href="#help" style="text-decoration:none">Foster &amp; Volunteer</a>
       <a href="#about" style="text-decoration:none">Our Story</a>
       <a href="#contact" style="text-decoration:none">Contact</a>
-      <a href="#donate" style="background:#393130;color:#fff;padding:11px 24px;border-radius:10px;font-weight:800;box-shadow:4px 4px 0 rgba(57,49,47,.35);text-decoration:none">DONATE ♥</a>
+      <a href="#donate" class="lift" style="background:#393130;color:#fff;padding:11px 24px;border-radius:10px;font-weight:800;box-shadow:4px 4px 0 rgba(57,49,47,.35);text-decoration:none">DONATE ♥</a>
     </div>
   </div>
 
   <!-- HERO -->
   <div id="top" class="wrap" style="position:relative;padding-top:72px;padding-bottom:60px;overflow:hidden">
     <img class="hero-art" src="assets/logo-mark.png" alt="" style="position:absolute;right:4vw;top:40px;width:min(400px,32vw);opacity:.9">
-    <div style="position:relative;max-width:700px">
-      <div style="font-weight:800;font-size:clamp(48px,6.5vw,84px);line-height:.98;letter-spacing:-.03em;color:#fff;text-shadow:4px 4px 0 rgba(57,49,47,.9)">STRAY TODAY.<br>FAMILY<br>TOMORROW.</div>
-      <div style="font-size:17px;line-height:1.55;color:#393130;max-width:44ch;margin:24px 0 28px;font-weight:600">Volunteer-run rescue for the cats, dogs &amp; small critters of Long Beach. We spay, neuter, patch them up, and find them people to love.</div>
-      <div style="display:flex;gap:14px;flex-wrap:wrap">
-        <a href="#donate" style="background:#393130;color:#fff;padding:16px 30px;border-radius:12px;font-weight:800;font-size:16px;box-shadow:5px 5px 0 rgba(57,49,47,.35);text-decoration:none">GIVE $25 →</a>
-        <a href="#adopt" style="background:#fff;color:#393130;padding:16px 30px;border-radius:12px;font-weight:800;font-size:16px;border:2px solid #393130;text-decoration:none">MEET THE PETS</a>
+    <div class="stagger" style="position:relative;max-width:700px">
+      <div class="reveal" style="font-weight:800;font-size:clamp(48px,6.5vw,84px);line-height:.98;letter-spacing:-.03em;color:#fff;text-shadow:4px 4px 0 rgba(57,49,47,.9)">STRAY TODAY.<br>FAMILY<br>TOMORROW.</div>
+      <div class="reveal" style="font-size:17px;line-height:1.55;color:#393130;max-width:44ch;margin:24px 0 28px;font-weight:600">Volunteer-run rescue for the cats, dogs &amp; small critters of Long Beach. We spay, neuter, patch them up, and find them people to love.</div>
+      <div class="reveal" style="display:flex;gap:14px;flex-wrap:wrap">
+        <a href="#donate" class="lift" style="background:#393130;color:#fff;padding:16px 30px;border-radius:12px;font-weight:800;font-size:16px;box-shadow:5px 5px 0 rgba(57,49,47,.35);text-decoration:none">GIVE $25 →</a>
+        <a href="#adopt" class="lift" style="background:#fff;color:#393130;padding:16px 30px;border-radius:12px;font-weight:800;font-size:16px;border:2px solid #393130;text-decoration:none">MEET THE PETS</a>
       </div>
     </div>
   </div>
 
   <!-- MARQUEE -->
   <div style="background:#393130;color:#fff;padding:14px 0;overflow:hidden;font-weight:800;font-size:15px;letter-spacing:.12em">
-    <div style="display:flex;white-space:nowrap;width:max-content;animation:par-marquee 22s linear infinite">
+    <div class="marquee-track" style="display:flex;white-space:nowrap;width:max-content;animation:par-marquee 22s linear infinite">
       <span style="padding-right:32px">ADOPT ♥ FOSTER ♥ DONATE ♥ SPAY &amp; NEUTER ♥ VOLUNTEER ♥ ADOPT ♥ FOSTER ♥ DONATE ♥ SPAY &amp; NEUTER ♥ VOLUNTEER ♥&nbsp;</span>
       <span style="padding-right:32px">ADOPT ♥ FOSTER ♥ DONATE ♥ SPAY &amp; NEUTER ♥ VOLUNTEER ♥ ADOPT ♥ FOSTER ♥ DONATE ♥ SPAY &amp; NEUTER ♥ VOLUNTEER ♥&nbsp;</span>
     </div>
@@ -84,53 +124,47 @@
 
   <!-- ADOPTABLES -->
   <div id="adopt" class="wrap" style="background:#FBF7F2;padding-top:60px;padding-bottom:52px;scroll-margin-top:80px">
-    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:26px;flex-wrap:wrap">
+    <div class="reveal" style="display:flex;align-items:baseline;gap:16px;margin-bottom:26px;flex-wrap:wrap">
       <div style="font-weight:800;font-size:38px;letter-spacing:-.02em">THE ADOPTABLES</div>
       <div style="font-size:14px;font-weight:700;color:#B0655F">updated weekly</div>
     </div>
-    <div class="grid-3">
-      <!-- MOCHI -->
-      <div style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
+    <div class="grid-3 stagger">
+      <div class="reveal lift" style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
         <img src="assets/photos/mochi-cat.jpg" alt="Mochi the cat" style="width:100%;height:240px;object-fit:cover;display:block">
         <div style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
           <div><div style="font-weight:800;font-size:22px">MOCHI</div><div style="font-size:13px;color:rgba(57,49,47,.6);font-weight:600">Cat · 2 yrs · certified lap warmer</div></div>
           <div style="background:#E9898D;color:#fff;font-weight:800;font-size:12px;padding:8px 14px;border-radius:999px;border:2px solid #393130;white-space:nowrap">ADOPT ME</div>
         </div>
       </div>
-      <!-- BISCUIT -->
-      <div style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
+      <div class="reveal lift" style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
         <img src="assets/photos/biscuit-dog.jpg" alt="Biscuit the dog" style="width:100%;height:240px;object-fit:cover;display:block">
         <div style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
           <div><div style="font-weight:800;font-size:22px">BISCUIT</div><div style="font-size:13px;color:rgba(57,49,47,.6);font-weight:600">Dog · 4 yrs · professional best friend</div></div>
           <div style="background:#E9898D;color:#fff;font-weight:800;font-size:12px;padding:8px 14px;border-radius:999px;border:2px solid #393130;white-space:nowrap">ADOPT ME</div>
         </div>
       </div>
-      <!-- CLOVER -->
-      <div style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
+      <div class="reveal lift" style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
         <img src="assets/photos/clover-bunny.jpg" alt="Clover the bunny" style="width:100%;height:240px;object-fit:cover;display:block">
         <div style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
           <div><div style="font-weight:800;font-size:22px">CLOVER</div><div style="font-size:13px;color:rgba(57,49,47,.6);font-weight:600">Bunny · 1 yr · expert carrot critic</div></div>
           <div style="background:#E9898D;color:#fff;font-weight:800;font-size:12px;padding:8px 14px;border-radius:999px;border:2px solid #393130;white-space:nowrap">ADOPT ME</div>
         </div>
       </div>
-      <!-- PEPPER -->
-      <div style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
+      <div class="reveal lift" style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
         <img src="assets/photos/pepper-kitten.jpg" alt="Pepper the kitten" style="width:100%;height:240px;object-fit:cover;display:block">
         <div style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
           <div><div style="font-weight:800;font-size:22px">PEPPER</div><div style="font-size:13px;color:rgba(57,49,47,.6);font-weight:600">Kitten · 6 mos · full-time troublemaker</div></div>
           <div style="background:#E9898D;color:#fff;font-weight:800;font-size:12px;padding:8px 14px;border-radius:999px;border:2px solid #393130;white-space:nowrap">ADOPT ME</div>
         </div>
       </div>
-      <!-- DUKE -->
-      <div style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
+      <div class="reveal lift" style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
         <img src="assets/photos/duke-dog.jpg" alt="Duke the dog" style="width:100%;height:240px;object-fit:cover;display:block">
         <div style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
           <div><div style="font-weight:800;font-size:22px">DUKE</div><div style="font-size:13px;color:rgba(57,49,47,.6);font-weight:600">Dog · 7 yrs · gentle senior gentleman</div></div>
           <div style="background:#E9898D;color:#fff;font-weight:800;font-size:12px;padding:8px 14px;border-radius:999px;border:2px solid #393130;white-space:nowrap">ADOPT ME</div>
         </div>
       </div>
-      <!-- WILLOW -->
-      <div style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
+      <div class="reveal lift" style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
         <img src="assets/photos/willow-cat.jpg" alt="Willow the cat" style="width:100%;height:240px;object-fit:cover;display:block">
         <div style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
           <div><div style="font-weight:800;font-size:22px">WILLOW</div><div style="font-size:13px;color:rgba(57,49,47,.6);font-weight:600">Cat · 3 yrs · quiet window watcher</div></div>
@@ -138,39 +172,39 @@
         </div>
       </div>
     </div>
-    <div style="margin-top:24px;font-size:14px;font-weight:600;color:rgba(57,49,47,.65)">Every adoptable pet is spayed/neutered, vaccinated, and microchipped before going home.</div>
+    <div class="reveal" style="margin-top:24px;font-size:14px;font-weight:600;color:rgba(57,49,47,.65)">Every adoptable pet is spayed/neutered, vaccinated, and microchipped before going home.</div>
   </div>
 
   <!-- HOW TO HELP -->
   <div id="help" class="wrap" style="background:#FBF7F2;padding-top:8px;padding-bottom:60px;scroll-margin-top:80px">
-    <div class="grid-3">
-      <div style="background:#E9898D;border:2px solid #393130;border-radius:16px;padding:28px;box-shadow:6px 6px 0 #393130">
+    <div class="grid-3 stagger">
+      <div class="reveal lift" style="background:#E9898D;border:2px solid #393130;border-radius:16px;padding:28px;box-shadow:6px 6px 0 #393130">
         <div style="font-weight:800;font-size:24px;color:#fff;text-shadow:2px 2px 0 rgba(57,49,47,.7);margin-bottom:8px">ADOPT</div>
         <div style="font-size:14.5px;line-height:1.6;font-weight:600;margin-bottom:16px">Meet a pet, fill out a short application, and take home a best friend. We'll walk you through every step.</div>
-        <a href="#contact" style="display:inline-block;background:#393130;color:#fff;padding:10px 20px;border-radius:10px;font-weight:800;font-size:13px;text-decoration:none">START AN APPLICATION</a>
+        <a href="#contact" class="lift" style="display:inline-block;background:#393130;color:#fff;padding:10px 20px;border-radius:10px;font-weight:800;font-size:13px;text-decoration:none">START AN APPLICATION</a>
       </div>
-      <div style="background:#fff;border:2px solid #393130;border-radius:16px;padding:28px;box-shadow:6px 6px 0 #E9898D">
+      <div class="reveal lift" style="background:#fff;border:2px solid #393130;border-radius:16px;padding:28px;box-shadow:6px 6px 0 #E9898D">
         <div style="font-weight:800;font-size:24px;margin-bottom:8px">FOSTER</div>
         <div style="font-size:14.5px;line-height:1.6;font-weight:600;color:rgba(57,49,47,.8);margin-bottom:16px">Open your home for a few weeks. We cover food and vet care — you supply the couch and the cuddles.</div>
-        <a href="#contact" style="display:inline-block;border:2px solid #393130;color:#393130;padding:9px 20px;border-radius:10px;font-weight:800;font-size:13px;text-decoration:none">BECOME A FOSTER</a>
+        <a href="#contact" class="lift" style="display:inline-block;border:2px solid #393130;color:#393130;padding:9px 20px;border-radius:10px;font-weight:800;font-size:13px;text-decoration:none">BECOME A FOSTER</a>
       </div>
-      <div style="background:#fff;border:2px solid #393130;border-radius:16px;padding:28px;box-shadow:6px 6px 0 #E9898D">
+      <div class="reveal lift" style="background:#fff;border:2px solid #393130;border-radius:16px;padding:28px;box-shadow:6px 6px 0 #E9898D">
         <div style="font-weight:800;font-size:24px;margin-bottom:8px">VOLUNTEER</div>
         <div style="font-size:14.5px;line-height:1.6;font-weight:600;color:rgba(57,49,47,.8);margin-bottom:16px">Transport, trapping for spay &amp; neuter, adoption events, social media — there's a job for every skill.</div>
-        <a href="#contact" style="display:inline-block;border:2px solid #393130;color:#393130;padding:9px 20px;border-radius:10px;font-weight:800;font-size:13px;text-decoration:none">JOIN THE CREW</a>
+        <a href="#contact" class="lift" style="display:inline-block;border:2px solid #393130;color:#393130;padding:9px 20px;border-radius:10px;font-weight:800;font-size:13px;text-decoration:none">JOIN THE CREW</a>
       </div>
     </div>
   </div>
 
   <!-- ABOUT -->
   <div id="about" class="wrap" style="background:#393130;padding-top:60px;padding-bottom:60px;scroll-margin-top:80px">
-    <div class="grid-2">
-      <div>
+    <div class="grid-2 stagger">
+      <div class="reveal">
         <div style="font-weight:800;font-size:34px;letter-spacing:-.02em;color:#fff;margin-bottom:14px">A LITTLE RESCUE WITH A BIG HEART</div>
         <div style="font-size:15.5px;line-height:1.7;color:rgba(255,255,255,.85);margin-bottom:14px">Passion Animal Rescue started with one mission: reduce the stray population in Long Beach through spay &amp; neuter, and help every animal we meet find a forever home.</div>
         <div style="font-size:15.5px;line-height:1.7;color:rgba(255,255,255,.85)">We're 100% volunteer-run. No offices, no salaries — just neighbors, foster homes, and a lot of love. Every dollar donated goes straight to food, vaccines, and surgeries.</div>
       </div>
-      <div style="border:2px solid rgba(255,255,255,.35);border-radius:16px;overflow:hidden">
+      <div class="reveal" style="border:2px solid rgba(255,255,255,.35);border-radius:16px;overflow:hidden">
         <img src="assets/photos/about-team.jpg" alt="The Passion Animal Rescue team" style="width:100%;height:320px;object-fit:cover;display:block">
       </div>
     </div>
@@ -178,7 +212,7 @@
 
   <!-- DONATE -->
   <div id="donate" class="wrap" style="background:#FBF7F2;padding-top:64px;padding-bottom:64px;scroll-margin-top:80px">
-    <div class="donate-card" style="background:#fff;border:2px solid #393130;border-radius:20px;padding:48px 52px;box-shadow:8px 8px 0 #393130">
+    <div class="donate-card reveal" style="background:#fff;border:2px solid #393130;border-radius:20px;padding:48px 52px;box-shadow:8px 8px 0 #393130">
       <div>
         <div style="font-weight:800;font-size:36px;letter-spacing:-.02em;margin-bottom:12px">EVERY DOLLAR = DINNER, MEDS &amp; BELLY RUBS</div>
         <div style="font-size:15px;line-height:1.65;color:rgba(57,49,47,.75);font-weight:600;margin-bottom:18px">Donations run through <b>Zeffy</b>, a 100%-free platform for nonprofits — no platform or card fees are taken out, so everything you give reaches the animals.</div>
@@ -195,7 +229,7 @@
           <div id="btn-monthly" style="flex:1;text-align:center;padding:11px 0;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;border:2px solid #393130">MONTHLY ♥</div>
         </div>
         <div class="amt-grid" id="amt-grid"></div>
-        <a id="donate-link" href="https://www.zeffy.com" target="_blank" rel="noopener" style="display:block;text-align:center;background:#393130;color:#fff;padding:17px 0;border-radius:12px;font-weight:800;font-size:16px;text-decoration:none;box-shadow:5px 5px 0 #E9898D">DONATE $25 VIA ZEFFY →</a>
+        <a id="donate-link" class="lift" href="https://www.zeffy.com" target="_blank" rel="noopener" style="display:block;text-align:center;background:#393130;color:#fff;padding:17px 0;border-radius:12px;font-weight:800;font-size:16px;text-decoration:none;box-shadow:5px 5px 0 #E9898D">DONATE $25 VIA ZEFFY →</a>
         <div style="text-align:center;font-size:12px;font-weight:600;color:rgba(57,49,47,.55);margin-top:10px">Secure checkout · Apple Pay, Google Pay &amp; cards accepted</div>
       </div>
     </div>
@@ -203,7 +237,7 @@
 
   <!-- FOOTER / CONTACT -->
   <div id="contact" class="wrap" style="background:#393130;color:rgba(255,255,255,.9);padding-top:48px;padding-bottom:36px;scroll-margin-top:80px">
-    <div class="footer-grid" style="padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.2)">
+    <div class="footer-grid reveal" style="padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.2)">
       <div style="display:flex;align-items:flex-start;gap:14px">
         <img src="assets/logo-mark.png" alt="" style="width:46px;filter:brightness(0) invert(1);opacity:.95">
         <div>
@@ -229,16 +263,169 @@
   </div>
 
 </div>
+<!-- =================== END DESKTOP LAYOUT ===================== -->
+
+
+<!-- ============================================================ -->
+<!-- ====================== MOBILE LAYOUT ======================= -->
+<!-- ============================================================ -->
+<div class="only-mobile" style="max-width:480px;margin:0 auto;background:#E9898D;min-height:100vh">
+
+  <!-- HEADER (charcoal) -->
+  <div style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:13px 18px;background:#393130">
+    <a href="#top-m" style="display:flex;align-items:center;gap:9px;text-decoration:none">
+      <img src="assets/logo-mark.png" alt="Passion Animal Rescue logo" style="width:30px;height:30px;object-fit:contain;filter:brightness(0) invert(1)">
+      <div style="color:#fff;font-weight:800;font-size:13px;letter-spacing:.02em;line-height:1.15">PASSION<br>ANIMAL RESCUE</div>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px">
+      <a href="#donate-m" class="lift" style="background:#E9898D;color:#fff;padding:9px 16px;border-radius:999px;font-weight:800;font-size:12.5px;white-space:nowrap;text-decoration:none">DONATE ♥</a>
+      <button id="m-burger" aria-label="Open menu" style="display:flex;flex-direction:column;gap:4px;padding:6px 2px;background:none;border:none;cursor:pointer">
+        <span style="display:block;width:20px;height:2.5px;background:#fff;border-radius:2px"></span>
+        <span style="display:block;width:20px;height:2.5px;background:#fff;border-radius:2px"></span>
+        <span style="display:block;width:13px;height:2.5px;background:#fff;border-radius:2px"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- HERO (punchy pink poster) -->
+  <div id="top-m" style="position:relative;overflow:hidden;padding:30px 18px 22px;scroll-margin-top:64px">
+    <img src="assets/logo-mark.png" alt="" style="position:absolute;right:-34px;bottom:-40px;width:190px;opacity:.28">
+    <div class="stagger" style="position:relative">
+      <div class="reveal" style="display:inline-block;background:#fff;color:#B0655F;font-weight:800;font-size:10.5px;letter-spacing:.12em;padding:6px 12px;border-radius:999px;margin-bottom:14px;box-shadow:3px 3px 0 rgba(57,49,47,.28)">LONG BEACH · EST. 2020</div>
+      <div class="reveal" style="font-weight:800;font-size:38px;line-height:1.02;letter-spacing:-.02em;margin-bottom:12px">Stray today.<br><span style="color:#fff;text-shadow:2.5px 2.5px 0 rgba(57,49,47,.9)">Family tomorrow.</span></div>
+      <div class="reveal" style="font-size:14px;line-height:1.55;font-weight:600;color:#393130;max-width:32ch;margin-bottom:20px">We rescue, heal &amp; rehome the stray cats, dogs and small critters of Long Beach.</div>
+      <div class="reveal" style="display:flex;gap:10px">
+        <a href="#donate-m" class="lift" style="background:#393130;color:#fff;padding:13px 22px;border-radius:999px;font-weight:800;font-size:13.5px;text-decoration:none;box-shadow:3px 3px 0 rgba(57,49,47,.3)">Give $25 →</a>
+        <a href="#adopt-m" class="lift" style="background:#fff;color:#393130;padding:13px 20px;border-radius:999px;font-weight:800;font-size:13.5px;text-decoration:none;border:2px solid #393130">Meet the pets</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS STRIP -->
+  <div class="stagger" style="display:flex;justify-content:space-between;padding:8px 26px 6px;text-align:center">
+    <div class="reveal"><div style="font-weight:800;font-size:21px;color:#393130">300+</div><div style="font-size:11px;font-weight:700;color:rgba(57,49,47,.6)">rehomed</div></div>
+    <div class="reveal"><div style="font-weight:800;font-size:21px;color:#393130">100%</div><div style="font-size:11px;font-weight:700;color:rgba(57,49,47,.6)">volunteer-run</div></div>
+    <div class="reveal"><div style="font-weight:800;font-size:21px;color:#393130">$0</div><div style="font-size:11px;font-weight:700;color:rgba(57,49,47,.6)">lost to fees</div></div>
+  </div>
+
+  <!-- SWIPEABLE ADOPTABLES -->
+  <div id="adopt-m" style="padding:22px 0 8px;scroll-margin-top:64px">
+    <div class="reveal" style="display:flex;align-items:baseline;justify-content:space-between;padding:0 18px;margin-bottom:12px">
+      <div style="font-weight:800;font-size:22px;letter-spacing:-.01em">The Adoptables</div>
+      <div style="font-size:12px;font-weight:800;color:#393130">swipe →</div>
+    </div>
+    <div class="swipe-row stagger" style="display:flex;gap:14px;overflow-x:auto;padding:6px 18px 18px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch">
+      <div class="reveal lift pet-card" style="flex:none;width:238px;scroll-snap-align:start;background:#fff;border:2px solid #393130;border-radius:20px;overflow:hidden;box-shadow:5px 5px 0 #393130">
+        <div style="position:relative">
+          <img src="assets/photos/mochi-cat.jpg" alt="Mochi the cat" style="width:100%;height:200px;object-fit:cover;display:block">
+          <div style="position:absolute;top:10px;left:10px;background:#E9898D;color:#fff;font-weight:800;font-size:10px;letter-spacing:.08em;padding:5px 10px;border-radius:999px;border:1.5px solid #393130">CAT · 2 YRS</div>
+        </div>
+        <div style="padding:13px 15px 15px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+            <div style="font-weight:800;font-size:18px">Mochi</div><div style="font-size:15px;color:#E9898D">♥</div>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:rgba(57,49,47,.6)">Certified lap warmer</div>
+        </div>
+      </div>
+      <div class="reveal lift pet-card" style="flex:none;width:238px;scroll-snap-align:start;background:#fff;border:2px solid #393130;border-radius:20px;overflow:hidden;box-shadow:5px 5px 0 #393130">
+        <div style="position:relative">
+          <img src="assets/photos/biscuit-dog.jpg" alt="Biscuit the dog" style="width:100%;height:200px;object-fit:cover;display:block">
+          <div style="position:absolute;top:10px;left:10px;background:#E9898D;color:#fff;font-weight:800;font-size:10px;letter-spacing:.08em;padding:5px 10px;border-radius:999px;border:1.5px solid #393130">DOG · 4 YRS</div>
+        </div>
+        <div style="padding:13px 15px 15px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+            <div style="font-weight:800;font-size:18px">Biscuit</div><div style="font-size:15px;color:#E9898D">♥</div>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:rgba(57,49,47,.6)">Professional best friend</div>
+        </div>
+      </div>
+      <div class="reveal lift pet-card" style="flex:none;width:238px;scroll-snap-align:start;background:#fff;border:2px solid #393130;border-radius:20px;overflow:hidden;box-shadow:5px 5px 0 #393130">
+        <div style="position:relative">
+          <img src="assets/photos/clover-bunny.jpg" alt="Clover the bunny" style="width:100%;height:200px;object-fit:cover;display:block">
+          <div style="position:absolute;top:10px;left:10px;background:#E9898D;color:#fff;font-weight:800;font-size:10px;letter-spacing:.08em;padding:5px 10px;border-radius:999px;border:1.5px solid #393130">BUNNY · 1 YR</div>
+        </div>
+        <div style="padding:13px 15px 15px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+            <div style="font-weight:800;font-size:18px">Clover</div><div style="font-size:15px;color:#E9898D">♥</div>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:rgba(57,49,47,.6)">Expert carrot critic</div>
+        </div>
+      </div>
+      <div class="reveal lift pet-card" style="flex:none;width:238px;scroll-snap-align:start;background:#fff;border:2px solid #393130;border-radius:20px;overflow:hidden;box-shadow:5px 5px 0 #393130">
+        <div style="position:relative">
+          <img src="assets/photos/pepper-kitten.jpg" alt="Pepper the kitten" style="width:100%;height:200px;object-fit:cover;display:block">
+          <div style="position:absolute;top:10px;left:10px;background:#E9898D;color:#fff;font-weight:800;font-size:10px;letter-spacing:.08em;padding:5px 10px;border-radius:999px;border:1.5px solid #393130">KITTEN · 6 MOS</div>
+        </div>
+        <div style="padding:13px 15px 15px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+            <div style="font-weight:800;font-size:18px">Pepper</div><div style="font-size:15px;color:#E9898D">♥</div>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:rgba(57,49,47,.6)">Full-time troublemaker</div>
+        </div>
+      </div>
+      <a href="#donate-m" class="reveal lift" style="flex:none;width:150px;scroll-snap-align:start;display:flex;align-items:center;justify-content:center;background:#393130;border-radius:20px;text-decoration:none">
+        <div style="text-align:center;font-weight:800;font-size:13px;color:#fff;padding:14px">See all pets →</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- DONATE (mobile) -->
+  <div id="donate-m" style="padding:14px 16px;scroll-margin-top:64px">
+    <div class="reveal" style="background:#fff;border:2px solid #393130;border-radius:22px;padding:26px 22px;box-shadow:6px 6px 0 #393130">
+      <div style="text-align:center;margin-bottom:6px;font-size:26px">🐾</div>
+      <div style="text-align:center;font-weight:800;font-size:21px;letter-spacing:-.01em;margin-bottom:8px">Every dollar = dinner,<br>meds &amp; belly rubs</div>
+      <div style="text-align:center;font-size:12.5px;line-height:1.55;font-weight:600;color:rgba(57,49,47,.62);margin-bottom:18px">Through Zeffy, 0% is lost to fees —<br>100% of your gift reaches the animals.</div>
+      <div id="m-amt-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px"></div>
+      <a id="m-donate-link" class="lift" href="https://www.zeffy.com" target="_blank" rel="noopener" style="display:block;text-align:center;background:#393130;color:#fff;padding:15px 0;border-radius:999px;font-weight:800;font-size:14.5px;text-decoration:none;box-shadow:4px 4px 0 #E9898D">Donate $25 via Zeffy →</a>
+      <div style="text-align:center;font-size:11px;font-weight:600;color:rgba(57,49,47,.5);margin-top:10px">Tax-deductible · EIN 84-1880200 · Venmo &amp; PayPal too</div>
+    </div>
+  </div>
+
+  <!-- HELP CHIPS -->
+  <div id="help-m" class="stagger" style="padding:6px 16px 22px;display:grid;grid-template-columns:1fr 1fr;gap:12px;scroll-margin-top:64px">
+    <a href="#contact-m" class="reveal lift" style="background:#fff;border:2px solid #393130;border-radius:18px;padding:18px;text-align:center;text-decoration:none;box-shadow:4px 4px 0 #E9898D">
+      <div style="font-size:22px;margin-bottom:4px">🏠</div><div style="font-weight:800;font-size:15px">Foster</div><div style="font-size:11.5px;font-weight:600;color:rgba(57,49,47,.6)">lend a couch</div>
+    </a>
+    <a href="#contact-m" class="reveal lift" style="background:#fff;border:2px solid #393130;border-radius:18px;padding:18px;text-align:center;text-decoration:none;box-shadow:4px 4px 0 #E9898D">
+      <div style="font-size:22px;margin-bottom:4px">🤝</div><div style="font-weight:800;font-size:15px">Volunteer</div><div style="font-size:11.5px;font-weight:600;color:rgba(57,49,47,.6)">join the crew</div>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <div id="contact-m" style="background:#393130;padding:26px 20px;text-align:center;scroll-margin-top:64px">
+    <img src="assets/logo-mark.png" alt="" style="width:34px;filter:brightness(0) invert(1);opacity:.95;margin-bottom:8px">
+    <div style="color:#fff;font-weight:800;font-size:13px;margin-bottom:6px">PASSION ANIMAL RESCUE</div>
+    <div style="font-size:11.5px;line-height:1.8;font-weight:600;color:rgba(255,255,255,.7)">
+      1200 E Anaheim St, Long Beach, CA 90813<br>
+      <a href="tel:5623266194" style="text-decoration:none;color:inherit">562-326-6194</a> · <a href="mailto:passionanimalrescue@gmail.com" style="text-decoration:none;color:inherit">passionanimalrescue@gmail.com</a><br>
+      501(c)(3) · EIN 84-1880200
+    </div>
+  </div>
+
+  <!-- slide-in menu -->
+  <div id="m-backdrop"></div>
+  <nav id="m-menu" aria-label="Menu">
+    <button id="m-close" aria-label="Close menu">×</button>
+    <a href="#adopt-m">Adopt</a>
+    <a href="#help-m">Foster &amp; Volunteer</a>
+    <a href="#donate-m">Donate ♥</a>
+    <a href="#contact-m">Contact</a>
+  </nav>
+
+</div>
+<!-- =================== END MOBILE LAYOUT ====================== -->
+
 
 <script>
-  // Interactive donation picker
-  (function(){
-    var amounts = [10, 25, 50, 100];
-    var state = { amount: 25, monthly: false };
-    var grid = document.getElementById('amt-grid');
-    var link = document.getElementById('donate-link');
-    var btnOnce = document.getElementById('btn-once');
-    var btnMonthly = document.getElementById('btn-monthly');
+  // ---------- Donate amount pickers (desktop + mobile) ----------
+  function buildPicker(opts){
+    var grid = document.getElementById(opts.grid);
+    var link = document.getElementById(opts.link);
+    if(!grid || !link) return;
+    var amounts = [10,25,50,100];
+    var state = { amount:25, monthly:false };
+    var btnOnce = opts.once ? document.getElementById(opts.once) : null;
+    var btnMonthly = opts.monthly ? document.getElementById(opts.monthly) : null;
 
     function render(){
       grid.innerHTML = '';
@@ -246,21 +433,82 @@
         var sel = v === state.amount;
         var el = document.createElement('div');
         el.textContent = '$' + v;
-        el.style.cssText = 'text-align:center;border:2px solid #393130;padding:15px 0;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer;background:' + (sel?'#E9898D':'#fff') + ';color:' + (sel?'#fff':'#393130');
+        el.className = 'lift';
+        el.style.cssText = opts.chipStyle(sel);
         el.onclick = function(){ state.amount = v; render(); };
         grid.appendChild(el);
       });
-      btnOnce.style.background = state.monthly ? '#fff' : '#393130';
-      btnOnce.style.color = state.monthly ? '#393130' : '#fff';
-      btnMonthly.style.background = state.monthly ? '#393130' : '#fff';
-      btnMonthly.style.color = state.monthly ? '#fff' : '#393130';
-      link.textContent = state.monthly
-        ? 'DONATE $' + state.amount + '/MO VIA ZEFFY →'
-        : 'DONATE $' + state.amount + ' VIA ZEFFY →';
+      if(btnOnce && btnMonthly){
+        btnOnce.style.background = state.monthly ? '#fff' : '#393130';
+        btnOnce.style.color = state.monthly ? '#393130' : '#fff';
+        btnMonthly.style.background = state.monthly ? '#393130' : '#fff';
+        btnMonthly.style.color = state.monthly ? '#fff' : '#393130';
+      }
+      link.textContent = opts.label(state);
     }
-    btnOnce.onclick = function(){ state.monthly = false; render(); };
-    btnMonthly.onclick = function(){ state.monthly = true; render(); };
+    if(btnOnce) btnOnce.onclick = function(){ state.monthly=false; render(); };
+    if(btnMonthly) btnMonthly.onclick = function(){ state.monthly=true; render(); };
     render();
+  }
+
+  // Desktop picker (poster style, with one-time/monthly toggle)
+  buildPicker({
+    grid:'amt-grid', link:'donate-link', once:'btn-once', monthly:'btn-monthly',
+    chipStyle:function(sel){
+      return 'text-align:center;border:2px solid #393130;padding:15px 0;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer;background:'+(sel?'#E9898D':'#fff')+';color:'+(sel?'#fff':'#393130');
+    },
+    label:function(s){ return s.monthly ? 'DONATE $'+s.amount+'/MO VIA ZEFFY →' : 'DONATE $'+s.amount+' VIA ZEFFY →'; }
+  });
+
+  // Mobile picker (rounded chips, no monthly toggle)
+  buildPicker({
+    grid:'m-amt-grid', link:'m-donate-link',
+    chipStyle:function(sel){
+      return 'text-align:center;padding:12px 0;border-radius:14px;font-weight:800;font-size:14px;cursor:pointer;border:'+(sel?'2px solid #E9898D':'2px solid rgba(57,49,47,.25)')+';background:'+(sel?'#E9898D':'#fff')+';color:'+(sel?'#fff':'#393130');
+    },
+    label:function(s){ return 'Donate $'+s.amount+' via Zeffy →'; }
+  });
+
+  // ---------- Mobile slide-in menu ----------
+  (function(){
+    var burger = document.getElementById('m-burger');
+    var menu = document.getElementById('m-menu');
+    var back = document.getElementById('m-backdrop');
+    var close = document.getElementById('m-close');
+    if(!burger || !menu || !back) return;
+    function open(){ menu.classList.add('open'); back.classList.add('open'); document.body.classList.add('noscroll'); }
+    function shut(){ menu.classList.remove('open'); back.classList.remove('open'); document.body.classList.remove('noscroll'); }
+    burger.addEventListener('click', open);
+    back.addEventListener('click', shut);
+    if(close) close.addEventListener('click', shut);
+    menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', shut); });
+  })();
+
+  // ---------- Playful reveal-on-scroll ----------
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var els = document.querySelectorAll('.reveal, .stagger');
+    if(reduce || !('IntersectionObserver' in window)){
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var el = e.target;
+        if(el.classList.contains('stagger')){
+          el.querySelectorAll(':scope > .reveal').forEach(function(c){ c.classList.add('in'); });
+        }
+        if(el.classList.contains('reveal')) el.classList.add('in');
+        io.unobserve(el);
+      });
+    }, { threshold:0.12, rootMargin:'0px 0px -6% 0px' });
+
+    els.forEach(function(el){
+      // don't double-observe reveals that live inside a stagger group
+      if(el.classList.contains('reveal') && el.parentElement && el.parentElement.closest('.stagger')) return;
+      io.observe(el);
+    });
   })();
 </script>
 </body>
