@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9898D}
+image-slot{display:block;width:100%;height:100%}
+@keyframes par-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+html{scroll-behavior:smooth}
+</style>
+</helmet>
+
+<div style="font-family:'Bricolage Grotesque',sans-serif;color:#393130;background:#E9898D;min-width:980px" data-screen-label="Passion Animal Rescue site">
+
+  <!-- NAV -->
+  <div style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 5vw;background:#E9898D;border-bottom:2px solid #393130">
+    <a href="#top" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#393130">
+      <img src="assets/logo-mark.png" alt="Passion Animal Rescue logo" style="width:40px;height:40px;object-fit:contain">
+      <span style="font-weight:800;font-size:17px;letter-spacing:-.01em">PASSION ANIMAL RESCUE</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:26px;font-size:14px;font-weight:600">
+      <a href="#adopt" style="color:#393130;text-decoration:none">Adopt</a>
+      <a href="#help" style="color:#393130;text-decoration:none">Foster &amp; Volunteer</a>
+      <a href="#about" style="color:#393130;text-decoration:none">Our Story</a>
+      <a href="#contact" style="color:#393130;text-decoration:none">Contact</a>
+      <a href="#donate" style="background:#393130;color:#fff;padding:11px 24px;border-radius:10px;font-weight:800;box-shadow:4px 4px 0 rgba(57,49,47,.35);text-decoration:none">DONATE ♥</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div id="top" style="position:relative;padding:72px 5vw 60px;overflow:hidden">
+    <img src="assets/logo-mark.png" alt="" style="position:absolute;right:4vw;top:40px;width:min(400px,32vw);opacity:.9">
+    <div style="position:relative;max-width:700px">
+      <div style="font-weight:800;font-size:clamp(56px,6.5vw,84px);line-height:.98;letter-spacing:-.03em;color:#fff;text-shadow:4px 4px 0 rgba(57,49,47,.9)">STRAY TODAY.<br>FAMILY<br>TOMORROW.</div>
+      <div style="font-size:17px;line-height:1.55;color:#393130;max-width:44ch;margin:24px 0 28px;font-weight:600">Volunteer-run rescue for the cats, dogs &amp; small critters of Long Beach. We spay, neuter, patch them up, and find them people to love.</div>
+      <div style="display:flex;gap:14px">
+        <a href="#donate" style="background:#393130;color:#fff;padding:16px 30px;border-radius:12px;font-weight:800;font-size:16px;box-shadow:5px 5px 0 rgba(57,49,47,.35);text-decoration:none">GIVE {{ heroAmountLabel }} →</a>
+        <a href="#adopt" style="background:#fff;color:#393130;padding:16px 30px;border-radius:12px;font-weight:800;font-size:16px;border:2px solid #393130;text-decoration:none">MEET THE PETS</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div style="background:#393130;color:#fff;padding:14px 0;overflow:hidden;font-weight:800;font-size:15px;letter-spacing:.12em">
+    <div style="display:flex;white-space:nowrap;width:max-content;animation:{{ marqueeAnim }}">
+      <span style="padding-right:32px">ADOPT ♥ FOSTER ♥ DONATE ♥ SPAY &amp; NEUTER ♥ VOLUNTEER ♥ ADOPT ♥ FOSTER ♥ DONATE ♥ SPAY &amp; NEUTER ♥ VOLUNTEER ♥&nbsp;</span>
+      <span style="padding-right:32px">ADOPT ♥ FOSTER ♥ DONATE ♥ SPAY &amp; NEUTER ♥ VOLUNTEER ♥ ADOPT ♥ FOSTER ♥ DONATE ♥ SPAY &amp; NEUTER ♥ VOLUNTEER ♥&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- ADOPTABLES -->
+  <div id="adopt" style="background:#FBF7F2;padding:60px 5vw 52px;scroll-margin-top:80px">
+    <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:26px">
+      <div style="font-weight:800;font-size:38px;letter-spacing:-.02em">THE ADOPTABLES</div>
+      <div style="font-size:14px;font-weight:700;color:#B0655F">updated weekly</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px">
+      <sc-for list="{{ pets }}" as="pet" hint-placeholder-count="6">
+        <div style="background:#fff;border:2px solid #393130;border-radius:16px;overflow:hidden;box-shadow:6px 6px 0 #E9898D">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ pet.slotId }}" shape="rect" placeholder="{{ pet.placeholder }}" src="{{ pet.src }}" credit="{{ pet.credit }}" style="width:100%;height:240px" hint-size="100%,240px"></x-import>
+          <div style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <div>
+              <div style="font-weight:800;font-size:22px">{{ pet.name }}</div>
+              <div style="font-size:13px;color:rgba(57,49,47,.6);font-weight:600">{{ pet.desc }}</div>
+            </div>
+            <div style="background:#E9898D;color:#fff;font-weight:800;font-size:12px;padding:8px 14px;border-radius:999px;border:2px solid #393130;white-space:nowrap">ADOPT ME</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:24px;font-size:14px;font-weight:600;color:rgba(57,49,47,.65)">Every adoptable pet is spayed/neutered, vaccinated, and microchipped before going home.</div>
+  </div>
+
+  <!-- HOW TO HELP -->
+  <div id="help" style="background:#FBF7F2;padding:8px 5vw 60px;scroll-margin-top:80px">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px">
+      <div style="background:#E9898D;border:2px solid #393130;border-radius:16px;padding:28px;box-shadow:6px 6px 0 #393130">
+        <div style="font-weight:800;font-size:24px;color:#fff;text-shadow:2px 2px 0 rgba(57,49,47,.7);margin-bottom:8px">ADOPT</div>
+        <div style="font-size:14.5px;line-height:1.6;font-weight:600;margin-bottom:16px">Meet a pet, fill out a short application, and take home a best friend. We'll walk you through every step.</div>
+        <a href="#contact" style="display:inline-block;background:#393130;color:#fff;padding:10px 20px;border-radius:10px;font-weight:800;font-size:13px;text-decoration:none">START AN APPLICATION</a>
+      </div>
+      <div style="background:#fff;border:2px solid #393130;border-radius:16px;padding:28px;box-shadow:6px 6px 0 #E9898D">
+        <div style="font-weight:800;font-size:24px;margin-bottom:8px">FOSTER</div>
+        <div style="font-size:14.5px;line-height:1.6;font-weight:600;color:rgba(57,49,47,.8);margin-bottom:16px">Open your home for a few weeks. We cover food and vet care — you supply the couch and the cuddles.</div>
+        <a href="#contact" style="display:inline-block;border:2px solid #393130;color:#393130;padding:9px 20px;border-radius:10px;font-weight:800;font-size:13px;text-decoration:none">BECOME A FOSTER</a>
+      </div>
+      <div style="background:#fff;border:2px solid #393130;border-radius:16px;padding:28px;box-shadow:6px 6px 0 #E9898D">
+        <div style="font-weight:800;font-size:24px;margin-bottom:8px">VOLUNTEER</div>
+        <div style="font-size:14.5px;line-height:1.6;font-weight:600;color:rgba(57,49,47,.8);margin-bottom:16px">Transport, trapping for spay &amp; neuter, adoption events, social media — there's a job for every skill.</div>
+        <a href="#contact" style="display:inline-block;border:2px solid #393130;color:#393130;padding:9px 20px;border-radius:10px;font-weight:800;font-size:13px;text-decoration:none">JOIN THE CREW</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="about" style="background:#393130;padding:60px 5vw;scroll-margin-top:80px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center">
+      <div>
+        <div style="font-weight:800;font-size:34px;letter-spacing:-.02em;color:#fff;margin-bottom:14px">A LITTLE RESCUE WITH A BIG HEART</div>
+        <div style="font-size:15.5px;line-height:1.7;color:rgba(255,255,255,.85);font-weight:400;margin-bottom:14px">Passion Animal Rescue started with one mission: reduce the stray population in Long Beach through spay &amp; neuter, and help every animal we meet find a forever home.</div>
+        <div style="font-size:15.5px;line-height:1.7;color:rgba(255,255,255,.85);font-weight:400">We're 100% volunteer-run. No offices, no salaries — just neighbors, foster homes, and a lot of love. Every dollar donated goes straight to food, vaccines, and surgeries.</div>
+      </div>
+      <div style="border:2px solid rgba(255,255,255,.35);border-radius:16px;overflow:hidden">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="slot-site-about" shape="rect" placeholder="Drop a photo of the rescue team or a rescue moment" src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=900&amp;q=70" credit="Photo: Unsplash" style="width:100%;height:320px" hint-size="100%,320px"></x-import>
+      </div>
+    </div>
+  </div>
+
+  <!-- DONATE -->
+  <div id="donate" style="background:#FBF7F2;padding:64px 5vw;scroll-margin-top:80px">
+    <div style="background:#fff;border:2px solid #393130;border-radius:20px;padding:48px 52px;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;box-shadow:8px 8px 0 #393130">
+      <div>
+        <div style="font-weight:800;font-size:36px;letter-spacing:-.02em;margin-bottom:12px">EVERY DOLLAR = DINNER, MEDS &amp; BELLY RUBS</div>
+        <div style="font-size:15px;line-height:1.65;color:rgba(57,49,47,.75);font-weight:600;margin-bottom:18px">Donations run through <b>Zeffy</b>, a 100%-free platform for nonprofits — no platform or card fees are taken out, so everything you give reaches the animals.</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600;color:rgba(57,49,47,.75)">
+          <div>🩺 <b>$25</b> vaccinates a rescued kitten or puppy</div>
+          <div>✂️ <b>$50</b> covers one spay/neuter surgery</div>
+          <div>🏠 <b>$100</b> feeds a foster pet for a whole month</div>
+        </div>
+        <div style="font-size:12.5px;color:rgba(57,49,47,.55);font-weight:600;margin-top:18px">Tax-deductible · 501(c)(3) · EIN 84-1880200 · Prefer Venmo or PayPal? We accept those too.</div>
+      </div>
+      <div>
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+          <div onClick="{{ setOnce }}" style="flex:1;text-align:center;padding:11px 0;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;border:2px solid #393130;background:{{ onceBg }};color:{{ onceColor }}">ONE-TIME</div>
+          <div onClick="{{ setMonthly }}" style="flex:1;text-align:center;padding:11px 0;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;border:2px solid #393130;background:{{ monthlyBg }};color:{{ monthlyColor }}">MONTHLY ♥</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">
+          <sc-for list="{{ amounts }}" as="amt" hint-placeholder-count="4">
+            <div onClick="{{ amt.select }}" style="text-align:center;border:2px solid #393130;padding:15px 0;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer;background:{{ amt.bg }};color:{{ amt.color }}">{{ amt.label }}</div>
+          </sc-for>
+        </div>
+        <a href="https://www.zeffy.com" target="_blank" style="display:block;text-align:center;background:#393130;color:#fff;padding:17px 0;border-radius:12px;font-weight:800;font-size:16px;text-decoration:none;box-shadow:5px 5px 0 #E9898D">{{ donateLabel }}</a>
+        <div style="text-align:center;font-size:12px;font-weight:600;color:rgba(57,49,47,.55);margin-top:10px">Secure checkout · Apple Pay, Google Pay &amp; cards accepted</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER / CONTACT -->
+  <div id="contact" style="background:#393130;color:rgba(255,255,255,.9);padding:48px 5vw 36px;scroll-margin-top:80px">
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:44px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.2)">
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <img src="assets/logo-mark.png" alt="" style="width:46px;filter:brightness(0) invert(1);opacity:.95">
+        <div>
+          <div style="font-weight:800;font-size:18px;color:#fff">PASSION ANIMAL RESCUE</div>
+          <div style="font-size:13px;line-height:1.6;color:rgba(255,255,255,.65);font-weight:600;margin-top:6px">501(c)(3) Nonprofit Organization<br>EIN 84-1880200</div>
+        </div>
+      </div>
+      <div style="font-size:14px;line-height:1.8;font-weight:600">
+        <div style="font-size:12px;letter-spacing:.14em;color:#E9898D;font-weight:800;margin-bottom:8px">VISIT US</div>
+        1200 E Anaheim St.<br>Long Beach, CA 90813
+      </div>
+      <div style="font-size:14px;line-height:1.8;font-weight:600">
+        <div style="font-size:12px;letter-spacing:.14em;color:#E9898D;font-weight:800;margin-bottom:8px">SAY HELLO</div>
+        562-326-6194<br>passionanimalrescue@gmail.com<br>Facebook: Passion Animal Rescue
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding-top:22px;font-size:12px;font-weight:600;color:rgba(255,255,255,.5)">
+      <div>© 2026 Passion Animal Rescue. Made with love in Long Beach.</div>
+      <div>ADOPT ♥ FOSTER ♥ DONATE</div>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;marqueeMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;defaultAmount&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[10,25,50,100],&quot;default&quot;:25,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Donations&quot;}}">
+class Component extends DCLogic {
+  state = { amount: null, monthly: false };
+
+  renderVals() {
+    const defaultAmt = this.props.defaultAmount ?? 25;
+    const amount = this.state.amount ?? defaultAmt;
+    const monthly = this.state.monthly;
+    const marqueeOn = this.props.marqueeMotion ?? true;
+
+    const amounts = [10, 25, 50, 100].map((v) => {
+      const sel = v === amount;
+      return {
+        label: "$" + v,
+        bg: sel ? "#E9898D" : "#fff",
+        color: sel ? "#fff" : "#393130",
+        select: () => this.setState({ amount: v })
+      };
+    });
+
+    return {
+      pets: [
+        { slotId: "slot-1b-pet1", placeholder: "Drop Mochi's photo", name: "MOCHI", desc: "Cat · 2 yrs · certified lap warmer", src: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=700&q=70", credit: "Photo: Unsplash" },
+        { slotId: "slot-1b-pet2", placeholder: "Drop Biscuit's photo", name: "BISCUIT", desc: "Dog · 4 yrs · professional best friend", src: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=700&q=70", credit: "Photo: Unsplash" },
+        { slotId: "slot-1b-pet3", placeholder: "Drop Clover's photo", name: "CLOVER", desc: "Bunny · 1 yr · expert carrot critic", src: "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=700&q=70", credit: "Photo: Unsplash" },
+        { slotId: "slot-site-pet4", placeholder: "Drop Pepper's photo", name: "PEPPER", desc: "Kitten · 6 mos · full-time troublemaker", src: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=700&q=70", credit: "Photo: Unsplash" },
+        { slotId: "slot-site-pet5", placeholder: "Drop Duke's photo", name: "DUKE", desc: "Dog · 7 yrs · gentle senior gentleman", src: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=700&q=70", credit: "Photo: Unsplash" },
+        { slotId: "slot-site-pet6", placeholder: "Drop Willow's photo", name: "WILLOW", desc: "Cat · 3 yrs · quiet window watcher", src: "https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=700&q=70", credit: "Photo: Unsplash" }
+      ],
+      amounts,
+      heroAmountLabel: "$" + defaultAmt,
+      donateLabel: monthly ? `DONATE $${amount}/MO VIA ZEFFY →` : `DONATE $${amount} VIA ZEFFY →`,
+      marqueeAnim: marqueeOn ? "par-marquee 22s linear infinite" : "none",
+      setOnce: () => this.setState({ monthly: false }),
+      setMonthly: () => this.setState({ monthly: true }),
+      onceBg: monthly ? "#fff" : "#393130",
+      onceColor: monthly ? "#393130" : "#fff",
+      monthlyBg: monthly ? "#393130" : "#fff",
+      monthlyColor: monthly ? "#fff" : "#393130"
+    };
+  }
+}
+</script>
+</body>
+</html>
